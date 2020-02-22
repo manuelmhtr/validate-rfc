@@ -1,0 +1,35 @@
+{
+  "name": "validate-rfc",
+  "version": "1.0.0",
+  "description": "A simple library to validate mexican RFCs",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha -w test/index.js test/unit/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manuelmhtr/validate-rfc.git"
+  },
+  "keywords": [
+    "RFC",
+    "validator",
+    "validar",
+    "validador",
+    "Registro",
+    "Federal",
+    "de",
+    "Contribuyentes",
+    "Mexico",
+    "Mexican"
+  ],
+  "author": "Manuel de la Torre",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/manuelmhtr/validate-rfc/issues"
+  },
+  "homepage": "https://github.com/manuelmhtr/validate-rfc#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.0.1"
+  }
+}
