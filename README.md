@@ -6,6 +6,7 @@
 
 Una librería sencilla y ligera para validar [RFCs Mexicanos](https://es.wikipedia.org/wiki/Registro_Federal_de_Contribuyentes) (Registro Federal de Contribuyentes).
 
+
 ## Instalación
 
 Usa NPM o YARN:
@@ -14,13 +15,18 @@ Usa NPM o YARN:
 $ npm install validate-rfc
 ```
 
+
 ## API
+
 
 La librería expone una sola función (`.validateRfc`).
 
+
 ### .validateRfc(rfc)
 
+
 Valida que un string sea un RFC válido y entrega detalles sobre la validación.
+
 
 **Parámetros**
 
@@ -28,9 +34,11 @@ Valida que un string sea un RFC válido y entrega detalles sobre la validación.
 | --------- | ---- | ----------- |
 |`rfc`|String|El RFC a validar.|
 
+
 **Respuesta**
 
 Regresa un objeto plano con los siguientes valores:
+
 
 | Parámetro | Tipo | Descripción |
 | --------- | ---- | ----------- |
@@ -39,13 +47,15 @@ Regresa un objeto plano con los siguientes valores:
 |`type`|String|El tipo del RFC ingresado. Los valores pueden ser `person` para personas físicas o `company` para personas morales. Regresa `null` en caso de que el RFC sea inválido.|
 |`errors`|Array[String]|En caso de que el RFC no sea válido, aquí se indican los motivos por los que no fue válido.|
 
-Los posibles valores que puede contener el array `errors` y su descripción son:
+
+Los posibles valores que puede contener `errors` y su descripción son:
 
 | Error | Descripción |
 | ----- | ----------- |
 |`INVALID_FORMAT`|El formato es inválido, es decir, no cuenta con la longitud o estructura de caracteres esperado. Ej: `XYZ` porque claramente no es un RFC. |
 |`INVALID_DATE`|El string tiene el formato adecuado, pero los dígitos para la fecha generan una fecha inválida. Ej: `MHTR815511A70` porque refiere al mes `55`.|
-|`INVALID_VERIFICATION_DIGIT`|String|El string tiene el formato adecuado, pero el último caracter (dígito verificador) es inválido. Ej: `MHTR810511A79` termina en `9` pero se espera que termine en `2`.|
+|`INVALID_VERIFICATION_DIGIT`|El string tiene el formato adecuado, pero el último caracter (dígito verificador) es inválido. Ej: `MHTR810511A79` termina en `9` pero se espera que termine en `2`.|
+
 
 **Ejemplo**
 
@@ -82,6 +92,7 @@ Imprime:
 */
 ```
 
+
 ## Pruebas
 
 Para correr las pruebas ejecuta el comando:
@@ -89,6 +100,7 @@ Para correr las pruebas ejecuta el comando:
 ```shell
 $ npm test
 ```
+
 
 ## Licencia
 
