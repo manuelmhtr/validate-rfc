@@ -42,7 +42,7 @@ Regresa un objeto plano con los siguientes valores:
 
 | Parámetro | Tipo | Descripción |
 | --------- | ---- | ----------- |
-|`isValid`|Boolean|Indica es el string ingresado es un RFC válido.|
+|`isValid`|Boolean|Indica si el string ingresado es un RFC válido.|
 |`rfc`|String|El RFC formateado (en mayúsculas, sin espacios ni simbolos). Regresa `null` en caso de que el RFC sea inválido.|
 |`type`|String|El tipo del RFC ingresado. Los valores pueden ser `person` para personas físicas o `company` para personas morales. Regresa `null` en caso de que el RFC sea inválido.|
 |`errors`|Array[String]|En caso de que el RFC no sea válido, aquí se indican los motivos por los que no fue válido.|
