@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: 12.x
 
     steps:
     - uses: actions/checkout@v2
@@ -20,5 +20,3 @@ jobs:
     - run: npm install
     - run: npm run build --if-present
     - run: npm test
-      env:
-        NODE_ENV: test
