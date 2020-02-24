@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "npm install",
-    "test": "mocha -w test/index.js test/unit/"
+    "test": "mocha -r test/index.js test/unit/"
   },
   "repository": {
     "type": "git",
