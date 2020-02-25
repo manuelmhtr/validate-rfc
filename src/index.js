@@ -8,6 +8,10 @@ const RFC_TYPE_FOR_LENGTH = {
   '12': 'company',
   '13': 'person'
 };
+const SPECIAL_CASES = {
+  'XEXX010101000': 'foreign',
+  'XAXX010101000': 'generic'
+};
 
 const parseInput = (input) => {
   return String(input)
@@ -42,12 +46,16 @@ const validate = (rfc) => {
   return errors;
 };
 
+const validateSpecial = (rfc) => {
+  return rfc in SPECIAL_CASES;
+}
+
 const getType = (rfc) => RFC_TYPE_FOR_LENGTH[rfc.length] || null;
 
 const getValidResponse = (rfc) => ({
   isValid: true,
   rfc,
-  type: getType(rfc)
+  type: validateSpecial(rfc) ? SPECIAL_CASES[rfc] : getType(rfc)
 });
 
 const getInvalidResponse = (errors) => ({
@@ -62,5 +70,5 @@ module.exports = (input) => {
   const errors = validate(rfc);
   const isValid = errors.length === 0;
 
-  return isValid ? getValidResponse(rfc) : getInvalidResponse(errors);
+  return validateSpecial(rfc) ? getValidResponse(rfc) : isValid ? getValidResponse(rfc) : getInvalidResponse(errors);
 };
