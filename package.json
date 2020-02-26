@@ -1,10 +1,9 @@
 {
   "name": "validate-rfc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple library to validate mexican RFCs",
   "main": "src/index.js",
   "scripts": {
-    "build": "npm install",
     "test": "mocha -r test/index.js test/unit/"
   },
   "repository": {

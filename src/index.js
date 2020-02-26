@@ -36,6 +36,7 @@ const validateVerificationDigit = (rfc) => {
 };
 
 const validate = (rfc) => {
+  if (isSpecialCase(rfc)) return [];
   const errors = [];
   const hasValidFormat = RFC_REGEXP.test(rfc);
   const hasValidDate = hasValidFormat ? validateDate(rfc) : true;
@@ -46,16 +47,14 @@ const validate = (rfc) => {
   return errors;
 };
 
-const validateSpecial = (rfc) => {
-  return rfc in SPECIAL_CASES;
-}
+const isSpecialCase = (rfc) => rfc in SPECIAL_CASES;
 
-const getType = (rfc) => RFC_TYPE_FOR_LENGTH[rfc.length] || null;
+const getType = (rfc) => SPECIAL_CASES[rfc] || RFC_TYPE_FOR_LENGTH[rfc.length] || null;
 
 const getValidResponse = (rfc) => ({
   isValid: true,
   rfc,
-  type: validateSpecial(rfc) ? SPECIAL_CASES[rfc] : getType(rfc)
+  type: getType(rfc)
 });
 
 const getInvalidResponse = (errors) => ({
@@ -70,5 +69,5 @@ module.exports = (input) => {
   const errors = validate(rfc);
   const isValid = errors.length === 0;
 
-  return validateSpecial(rfc) ? getValidResponse(rfc) : isValid ? getValidResponse(rfc) : getInvalidResponse(errors);
+  return isValid ? getValidResponse(rfc) : getInvalidResponse(errors);
 };

@@ -43,6 +43,28 @@ describe('.validateRfc', () => {
     });
   });
 
+  describe('support for special cases', () => {
+    it('should return is valid and type "generic" for RFC XAXX010101000', () => {
+      const rfc = 'XAXX010101000';
+      const response = validateRfc(rfc);
+      expect(response).to.be.eql({
+        rfc: 'XAXX010101000',
+        isValid: true,
+        type: 'generic'
+      });
+    });
+
+    it('should return is valid and type "foreign" for RFC XEXX010101000', () => {
+      const rfc = 'XEXX010101000';
+      const response = validateRfc(rfc);
+      expect(response).to.be.eql({
+        rfc: 'XEXX010101000',
+        isValid: true,
+        type: 'foreign'
+      });
+    });
+  });
+
   describe('when RFC is not valid', () => {
     it('should retrun not valid and specify errors when input is not a string', () => {
       const rfc = null;
