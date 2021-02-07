@@ -101,6 +101,9 @@ Para correr las pruebas ejecuta el comando:
 $ npm test
 ```
 
+## Relacionado
+
+Además de validar el formato, necesitas validar que un RFC esté registrado en el SAT o no esté en una lista negra? Prueba con [Verifier](https://rapidapi.com/manuelmhtr/api/verifier).
 
 ## Licencia
 

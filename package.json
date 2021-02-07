@@ -28,8 +28,8 @@
   },
   "homepage": "https://github.com/manuelmhtr/validate-rfc#readme",
   "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^7.0.1"
+    "chai": "^4.3.0",
+    "mocha": "^8.2.1"
   },
   "dependencies": {}
 }
