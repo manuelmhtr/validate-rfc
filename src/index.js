@@ -35,9 +35,10 @@ const validateVerificationDigit = (rfc) => {
   return expected === digit;
 };
 
-const validate = (rfc, strict) => {
+const validate = (rfc, options = {}) => {
   if (isSpecialCase(rfc)) return [];
   const errors = [];
+  const strict = options.strict !== false;
   const hasValidFormat = RFC_REGEXP.test(rfc);
   const hasValidDate = hasValidFormat ? validateDate(rfc) : true;
   const hasValidDigit = hasValidFormat ? validateVerificationDigit(rfc) : true;

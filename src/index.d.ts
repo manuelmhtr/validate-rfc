@@ -1,4 +1,4 @@
-export default function validateRfc(rfc: string, strict?: boolean): {
+export default function validateRfc(rfc: string, options?: { strict?: boolean }): {
   isValid: boolean,
   type?: 'company' | 'person' | 'foreign' | 'generic',
   rfc?: string,

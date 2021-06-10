@@ -99,9 +99,9 @@ describe('.validateRfc', () => {
       });
     });
 
-    it('should return not valid and specify errors when verification digit is not correct in strict mode', () => {
+    it('should return not valid and specify errors when verification digit is not correct', () => {
       const rfc = 'MHTR810511A79';
-      const response = validateRfc(rfc, true);
+      const response = validateRfc(rfc);
       expect(response).to.be.eql({
         rfc: null,
         isValid: false,
@@ -110,9 +110,9 @@ describe('.validateRfc', () => {
       });
     });
 
-    it('should skip verification digit validation by default', () => {
+    it('should skip verification digit validation when strict mode is off', () => {
       const rfc = 'MHTR810511A79';
-      const response = validateRfc(rfc);
+      const response = validateRfc(rfc, { strict: false });
       expect(response).to.be.eql({
         rfc,
         isValid: true,
@@ -122,7 +122,7 @@ describe('.validateRfc', () => {
 
     it('should return multiple errors when is required', () => {
       const rfc = 'MHTR815511778';
-      const response = validateRfc(rfc, true);
+      const response = validateRfc(rfc);
       expect(response).to.be.eql({
         rfc: null,
         isValid: false,
