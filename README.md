@@ -33,6 +33,8 @@ Valida que un string sea un RFC válido y entrega detalles sobre la validación.
 | Parámetro | Tipo | Descripción |
 | --------- | ---- | ----------- |
 |`rfc`|String|El RFC a validar.|
+|`options`|Object| Opciones de la función (Opcional).|
+|`options.omitVerificationDigit`|Boolean| Si esta opción es `true`, el dígito verificatdor no será validado. (Default: `false`).|
 
 
 **Respuesta**

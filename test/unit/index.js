@@ -110,9 +110,9 @@ describe('.validateRfc', () => {
       });
     });
 
-    it('should skip verification digit validation when strict mode is off', () => {
+    it('should skip verification digit validation when `omitVerificationDigit` is true', () => {
       const rfc = 'MHTR810511A79';
-      const response = validateRfc(rfc, { strict: false });
+      const response = validateRfc(rfc, { omitVerificationDigit: true });
       expect(response).to.be.eql({
         rfc,
         isValid: true,

@@ -38,13 +38,13 @@ const validateVerificationDigit = (rfc) => {
 const validate = (rfc, options = {}) => {
   if (isSpecialCase(rfc)) return [];
   const errors = [];
-  const strict = options.strict !== false;
+  const skipDigit = options.omitVerificationDigit;
   const hasValidFormat = RFC_REGEXP.test(rfc);
   const hasValidDate = hasValidFormat ? validateDate(rfc) : true;
   const hasValidDigit = hasValidFormat ? validateVerificationDigit(rfc) : true;
   if (!hasValidFormat) errors.push(INVALID_FORMAT_ERROR);
   if (!hasValidDate) errors.push(INVALID_DATE_ERROR);
-  if (!hasValidDigit && strict) errors.push(INVALID_VERIFICATION_DIGIT_ERROR);
+  if (!hasValidDigit && !skipDigit) errors.push(INVALID_VERIFICATION_DIGIT_ERROR);
   return errors;
 };
 
