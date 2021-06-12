@@ -66,7 +66,7 @@ describe('.validateRfc', () => {
   });
 
   describe('when RFC is not valid', () => {
-    it('should retrun not valid and specify errors when input is not a string', () => {
+    it('should return not valid and specify errors when input is not a string', () => {
       const rfc = null;
       const response = validateRfc(rfc);
       expect(response).to.be.eql({
@@ -77,7 +77,7 @@ describe('.validateRfc', () => {
       });
     });
 
-    it('should retrun not valid and specify errors when format is incorrect', () => {
+    it('should return not valid and specify errors when format is incorrect', () => {
       const rfc = 'INVALID_RFC';
       const response = validateRfc(rfc);
       expect(response).to.be.eql({
@@ -88,7 +88,7 @@ describe('.validateRfc', () => {
       });
     });
 
-    it('should retrun not valid and specify errors when format is correct but date is not', () => {
+    it('should return not valid and specify errors when format is correct but date is not', () => {
       const rfc = 'MHTR815511A70';
       const response = validateRfc(rfc);
       expect(response).to.be.eql({
@@ -99,7 +99,7 @@ describe('.validateRfc', () => {
       });
     });
 
-    it('should retrun not valid and specify errors when verification digit is not correct', () => {
+    it('should return not valid and specify errors when verification digit is not correct', () => {
       const rfc = 'MHTR810511A79';
       const response = validateRfc(rfc);
       expect(response).to.be.eql({
@@ -110,7 +110,17 @@ describe('.validateRfc', () => {
       });
     });
 
-    it('should retrun multiple errors when is required', () => {
+    it('should skip verification digit validation when `omitVerificationDigit` is true', () => {
+      const rfc = 'MHTR810511A79';
+      const response = validateRfc(rfc, { omitVerificationDigit: true });
+      expect(response).to.be.eql({
+        rfc,
+        isValid: true,
+        type: 'person'
+      });
+    });
+
+    it('should return multiple errors when is required', () => {
       const rfc = 'MHTR815511778';
       const response = validateRfc(rfc);
       expect(response).to.be.eql({

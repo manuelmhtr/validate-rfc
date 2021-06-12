@@ -35,15 +35,16 @@ const validateVerificationDigit = (rfc) => {
   return expected === digit;
 };
 
-const validate = (rfc) => {
+const validate = (rfc, options = {}) => {
   if (isSpecialCase(rfc)) return [];
   const errors = [];
+  const skipDigit = options.omitVerificationDigit;
   const hasValidFormat = RFC_REGEXP.test(rfc);
   const hasValidDate = hasValidFormat ? validateDate(rfc) : true;
   const hasValidDigit = hasValidFormat ? validateVerificationDigit(rfc) : true;
   if (!hasValidFormat) errors.push(INVALID_FORMAT_ERROR);
   if (!hasValidDate) errors.push(INVALID_DATE_ERROR);
-  if (!hasValidDigit) errors.push(INVALID_VERIFICATION_DIGIT_ERROR);
+  if (!hasValidDigit && !skipDigit) errors.push(INVALID_VERIFICATION_DIGIT_ERROR);
   return errors;
 };
 
@@ -64,9 +65,9 @@ const getInvalidResponse = (errors) => ({
   errors
 });
 
-module.exports = (input) => {
+module.exports = (input, strict = false) => {
   const rfc = parseInput(input);
-  const errors = validate(rfc);
+  const errors = validate(rfc, strict);
   const isValid = errors.length === 0;
 
   return isValid ? getValidResponse(rfc) : getInvalidResponse(errors);
