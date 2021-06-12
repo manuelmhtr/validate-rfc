@@ -50,7 +50,7 @@ module.exports = (input) => {
   const rfc = input.length === 12 ? ` ${input}` : input;
   const base = rfc.slice(0, -1);
   const score = getScore(base);
-  const mod = 11 - score % 11;
+  const mod = (11000 - score) % 11;
   if (mod === 11) return '0';
   if (mod === 10) return 'A';
   return String(mod);

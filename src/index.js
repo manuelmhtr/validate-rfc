@@ -1,9 +1,12 @@
 const getVerificationDigit = require('./get-verification-digit');
+const forbiddenWords = require('./forbidden-words.json');
+const validRfcs = require('./valid-rfcs.json');
 
 const RFC_REGEXP = /^([A-ZÑ\x26]{3,4})([0-9]{6})([A-Z0-9]{3})$/;
 const INVALID_FORMAT_ERROR = 'INVALID_FORMAT';
 const INVALID_DATE_ERROR = 'INVALID_DATE';
 const INVALID_VERIFICATION_DIGIT_ERROR = 'INVALID_VERIFICATION_DIGIT';
+const FORBIDDEN_WORD_ERROR = 'FORBIDDEN_WORD';
 const RFC_TYPE_FOR_LENGTH = {
   '12': 'company',
   '13': 'person'
@@ -30,25 +33,32 @@ const validateDate = (rfc) => {
 };
 
 const validateVerificationDigit = (rfc) => {
-  const expected = rfc.slice(-1);
-  const digit = getVerificationDigit(rfc);
+  const digit = rfc.slice(-1);
+  const expected = getVerificationDigit(rfc);
   return expected === digit;
 };
 
-const validate = (rfc, options = {}) => {
-  if (isSpecialCase(rfc)) return [];
+const hasForbiddenWords = (rfc) => {
+  const prefix = (rfc || '').slice(0, 4);
+  return forbiddenWords.includes(prefix);
+};
+
+const validate = (rfc, { omitVerificationDigit } = {}) => {
+  if (isSpecialCase(rfc) || isValidCase(rfc)) return [];
   const errors = [];
-  const skipDigit = options.omitVerificationDigit;
   const hasValidFormat = RFC_REGEXP.test(rfc);
   const hasValidDate = hasValidFormat ? validateDate(rfc) : true;
   const hasValidDigit = hasValidFormat ? validateVerificationDigit(rfc) : true;
   if (!hasValidFormat) errors.push(INVALID_FORMAT_ERROR);
   if (!hasValidDate) errors.push(INVALID_DATE_ERROR);
-  if (!hasValidDigit && !skipDigit) errors.push(INVALID_VERIFICATION_DIGIT_ERROR);
+  if (!hasValidDigit && !omitVerificationDigit) errors.push(INVALID_VERIFICATION_DIGIT_ERROR);
+  if (hasForbiddenWords(rfc)) errors.push(FORBIDDEN_WORD_ERROR);
   return errors;
 };
 
 const isSpecialCase = (rfc) => rfc in SPECIAL_CASES;
+
+const isValidCase = (rfc) => validRfcs.includes(rfc);
 
 const getType = (rfc) => SPECIAL_CASES[rfc] || RFC_TYPE_FOR_LENGTH[rfc.length] || null;
 
@@ -65,9 +75,9 @@ const getInvalidResponse = (errors) => ({
   errors
 });
 
-module.exports = (input, strict = false) => {
+module.exports = (input, options) => {
   const rfc = parseInput(input);
-  const errors = validate(rfc, strict);
+  const errors = validate(rfc, options);
   const isValid = errors.length === 0;
 
   return isValid ? getValidResponse(rfc) : getInvalidResponse(errors);

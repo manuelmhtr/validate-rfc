@@ -41,6 +41,16 @@ describe('.validateRfc', () => {
         type: 'person'
       });
     });
+
+    it('should return valid for those documented cases when the verification digit does not match', () => {
+      const rfc = 'LME060822IH5';
+      const response = validateRfc(rfc);
+      expect(response).to.be.eql({
+        rfc: 'LME060822IH5',
+        isValid: true,
+        type: 'company'
+      });
+    });
   });
 
   describe('support for special cases', () => {
@@ -117,6 +127,17 @@ describe('.validateRfc', () => {
         rfc,
         isValid: true,
         type: 'person'
+      });
+    });
+
+    it('should return not valid and specify errors when contains a forbidden word', () => {
+      const rfc = 'FETO930411792';
+      const response = validateRfc(rfc);
+      expect(response).to.be.eql({
+        rfc: null,
+        isValid: false,
+        type: null,
+        errors: ['FORBIDDEN_WORD']
       });
     });
 
