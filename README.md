@@ -26,7 +26,7 @@ Añade el siguiente script a tu proyecto:
 <script src="https://cdn.jsdelivr.net/gh/manuelmhtr/validate-rfc@latest/dist/index.js" type="text/javascript"></script>
 
 <!-- O especifica una versión -->
-<script src="https://cdn.jsdelivr.net/gh/manuelmhtr/validate-rfc@v2.0.0/dist/index.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/gh/manuelmhtr/validate-rfc@v2.0.1/dist/index.js" type="text/javascript"></script>
 
 <!-- Esto va a exportar una función "validateRfc": -->
 <script type="text/javascript">
