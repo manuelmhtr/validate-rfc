@@ -1,6 +1,6 @@
 {
   "name": "validate-rfc",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A simple library to validate mexican RFCs",
   "main": "dist/index.js",
   "scripts": {
@@ -44,6 +44,7 @@
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "chai": "^4.3.4",
+    "jest": "^28.1.3",
     "mocha": "^9.1.0",
     "rollup": "^2.56.3",
     "rollup-plugin-terser": "^7.0.2"

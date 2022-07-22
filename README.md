@@ -4,31 +4,37 @@
 ![](https://img.shields.io/npm/dm/validate-rfc)
 ![](https://img.shields.io/github/license/manuelmhtr/validate-rfc?color=blue)
 
-Una librería sencilla y ligera para validar [RFCs Mexicanos](https://es.wikipedia.org/wiki/Registro_Federal_de_Contribuyentes) (Registro Federal de Contribuyentes).
+A simple and lightweight library to validate [Mexican RFCs](https://es.wikipedia.org/wiki/Registro_Federal_de_Contribuyentes) (Tax ID).
 
 
-## Instalación
+## Install
 
 ### NodeJS
 
-Usa NPM o YARN:
+Use NPM:
 
 ```shell
 $ npm install --save validate-rfc
 ```
 
-### Navegador
+Or YARN:
 
-Añade el siguiente script a tu proyecto:
+```shell
+$ yarn add validate-rfc
+```
+
+### Browser
+
+Add the script to your project:
 
 ```html
-<!-- última versión -->
+<!-- Latest version -->
 <script src="https://cdn.jsdelivr.net/gh/manuelmhtr/validate-rfc@latest/dist/index.js" type="text/javascript"></script>
 
-<!-- O especifica una versión -->
-<script src="https://cdn.jsdelivr.net/gh/manuelmhtr/validate-rfc@v2.0.1/dist/index.js" type="text/javascript"></script>
+<!-- Or specify a version -->
+<script src="https://cdn.jsdelivr.net/gh/manuelmhtr/validate-rfc@v2.0.2/dist/index.js" type="text/javascript"></script>
 
-<!-- Esto va a exportar una función "validateRfc": -->
+<!-- This will export a global function "validateRfc": -->
 <script type="text/javascript">
   var data = validateRfc('mhtr93041179a');
   console.log(data);
@@ -38,48 +44,45 @@ Añade el siguiente script a tu proyecto:
 
 ## API
 
-La librería expone una sola función (`.validateRfc`).
+The library only exposes a single function (`.validateRfc`).
 
 
 ### .validateRfc(rfc)
 
 
-Valida que un string sea un RFC válido y entrega detalles sobre la validación.
+Checks whether a string is a valid RFC and returns validation details.
 
 
-**Parámetros**
+**Parameters**
 
-| Parámetro | Tipo | Descripción |
+| Parameter | Type | Description |
 | --------- | ---- | ----------- |
-|`rfc`|String|El RFC a validar.|
-|`options`|Object| Parámetros de configuración (Opcional).|
-|`options.omitVerificationDigit`|Boolean|Si esta opción es `true`, se omite la validación del dígito verificador (Default: `false`).|
+|`rfc`|String|The RFC to be validated.|
+|`options`|Object| Settings (Optional).|
+|`options.omitVerificationDigit`|Boolean|When `true`, the [_Check digit_](https://en.wikipedia.org/wiki/Check_digit) is omitted from the validation (Default: `false`). This option is useful since there are some RFCs with an invalid _Check digit_ that are recognized as valid by the Mexican authorities (See [Known issues](#known-issues)).|
 
+**Response**
 
-**Respuesta**
+It returns a plain object with the values:
 
-Regresa un objeto plano con los siguientes valores:
-
-
-| Parámetro | Tipo | Descripción |
+| Parameter | Type | Description |
 | --------- | ---- | ----------- |
-|`isValid`|Boolean|Indica si el string ingresado es un RFC válido.|
-|`rfc`|String|El RFC formateado (en mayúsculas, sin espacios ni símbolos). Regresa `null` en caso de que el RFC sea inválido.|
-|`type`|String|El tipo del RFC ingresado. Los valores pueden ser `person` para personas físicas, `company` para personas morales, `generic` para el RFC genérico "XAXX010101000" o `foreign` para el RFC "XEXX010101000" para residentes en el extranjero. Regresa `null` en caso de que el RFC sea inválido.|
-|`errors`|Array[String]|En caso de que el RFC no sea válido, aquí se indican los motivos por los que no fue válido.|
+|`isValid`|Boolean|Indicates if the string is a valid RFC.|
+|`rfc`|String|The formatted RFC (uppercase, with no white spaces or symbols). Returns `null` when input is an invalid RFC.|
+|`type`|String|The classification of the provided RFC. Values can be `person` for a legal person, `company` for companies, `generic` for the generic RFC "XAXX010101000" ir `foreign` for the RFC "XEXX010101000" which is used by foreign people. Returns `null` when input is an invalid RFC.|
+|`errors`|Array[String]|In case the RFC is invalid, the reasons why the RFC is invalid will be listed here.|
 
-
-Los posibles valores que puede contener `errors` y su descripción son:
+Possible `errors` values and they description are:
 
 | Error | Descripción |
 | ----- | ----------- |
-|`INVALID_FORMAT`|El formato es inválido, es decir, no cuenta con la longitud o estructura de caracteres esperado. Ej: `XYZ` porque claramente no es un RFC. |
-|`INVALID_DATE`|El string tiene el formato adecuado, pero los dígitos para la fecha generan una fecha inválida. Ej: `MHTR815511A70` porque refiere al mes `55`.|
-|`INVALID_VERIFICATION_DIGIT`|El string tiene el formato adecuado, pero el último caracter (dígito verificador) es inválido. Ej: `MHTR810511A79` termina en `9` pero se espera que termine en `2`.|
-|`FORBIDDEN_WORD`|El string contiene una de las [palabras inconvenientes](https://solucionfactible.com/sfic/resources/files/palabrasInconvenientes-rfc.pdf) que no pueden formar un RFC. Ej: `FETO930411792` las iniciales forman la palabra `FETO`.|
+|`INVALID_FORMAT`|The format is invalid, that means, the string does not meet with the required length or expected structure. Eg: `XYZ` because clearly is not an RFC. |
+|`INVALID_DATE`|The string may have the correct format, but digits generate an invalid date. Eg: `MHTR815511A70` because it refers to month `55`.|
+|`INVALID_VERIFICATION_DIGIT`|The string has a valid format, but the last character (check digit) is invalid. Eg: `MHTR810511A79` ends with `9` but it is expected to end with `2`.|
+|`FORBIDDEN_WORD`|The string contains one of the [inconvenient words](https://solucionfactible.com/sfic/resources/files/palabrasInconvenientes-rfc.pdf) that cannot be included in an RFC. Eg: `FETO930411792` the initials make the word `FETO` (fetus, LOL).|
 
 
-**Ejemplo**
+**Example**
 
 ```js
 const validateRfc = require('validate-rfc');
@@ -88,7 +91,7 @@ const response = validateRfc('mhtr93041179a');
 console.log(response);
 
 /*
-Imprime:
+Prints:
 
 {
   isValid: true,
@@ -98,11 +101,11 @@ Imprime:
 
 */
 
-const response = validateRfc('Este no es un RFC');
+const response = validateRfc('This is not an RFC');
 console.log(response);
 
 /*
-Imprime:
+Prints:
 
 {
   isValid: false,
@@ -115,33 +118,40 @@ Imprime:
 ```
 
 
-## Pruebas
+## Tests
 
-Para correr las pruebas ejecuta el comando:
+Run the test with the command:
 
 ```shell
-$ npm test
+$ yarn test
 ```
 
-## Problemas conocidos
+## Known issues
 
-### Discrepancias en el dígito verificador
+### Check digit mismatches
 
-Algunos RFC registrados ante el SAT no pasan la validación del dígito verificador. Por ejemplo el RFC `LME060822IH5` es válido y susceptible a recibir facturas según el [validador oficial del SAT](https://agsc.siat.sat.gob.mx/PTSC/ValidaRFC/index.jsf), sin embargo al calcular su dígito verificador este debería terminar en `3` en lugar de `5`. Por lo tanto en estos casos la librería retorna `isValid` como `false` y el error `INVALID_VERIFICATION_DIGIT`.
+Some RFCs registered by the SAT (Mexican taxing bureau) does not pass the _Check digit_ validation. For instance, `LME060822IH5` is a valid RFC and able to be invoices according the [SAT official validator](https://agsc.siat.sat.gob.mx/PTSC/ValidaRFC/index.jsf), however its _Check digit_ should be `3` rather than `5`. Therefore in those cases, this library returns `isValid` as `false` and the error `INVALID_VERIFICATION_DIGIT`.
 
-Soluciones:
+Solutions:
+1. If you find one of these cases, add it to the [list of valid RFCs](/src/valid-rfcs.json). **Upper-cased and sorted alphabetically**. By adding them to the list you are supporting the documentation of such cases and preventing from returning an error the next time.
+2. Use the option `omitVerificationDigit` to ignore the _Check digit_ validation. It has the advantage of being a faster solution and covers all the cases, but many invalid RFCs will pass the validation.
 
-1. Si encuentras un caso en particular agrega el RFC a la [lista de RFCs válidos](/src/valid-rfcs.json). En **mayúsculas y en orden alfabético**. Al agregarlo a la lista ese RFC ayudas a documentar estos casos y evitar que regrese error.
-2. Utiliza la opción `omitVerificationDigit` para ignorar la validación del dígito verificador. Tiene la ventaja de que es una solución más rápida y cubre todos lo casos; pero va a regresar como válidos muchos RFC que no están permitidos.
-
-Referencias:
+References:
 - [Issue #10](https://github.com/manuelmhtr/validate-rfc/issues/10)
 - https://es.stackoverflow.com/questions/140420/validacion-de-rfc-con-errores
 
+## Used by
 
-## Relacionado
+Used by tens of successful teams:
 
-Además de validar el formato, necesitas validar que un RFC esté registrado en el SAT o no esté en una lista negra? Prueba con [Verifier](https://rapidapi.com/manuelmhtr/api/verifier).
+| <a href="https://www.zenfi.mx/"><img src="https://avatars.githubusercontent.com/u/68744962?s=200&v=4" width="64"></a><br/>Zenfi | <a href="https://www.yotepresto.com/"><img src="https://avatars.githubusercontent.com/u/31322412?s=200&v=4" width="64"></a><br/>Yotepresto | <a href="https://www.deacero.com/"><img src="https://avatars.githubusercontent.com/u/64057746?s=200&v=4" width="64"></a><br/>DeAcero |
+| :--: | :--: | :--: |
+
+
+## Related
+
+* [validate-curp](https://github.com/manuelmhtr/validate-curp)
+* You need to check if an RFC is registered in SAT or is blacklisted? Try with [Verifier](https://rapidapi.com/manuelmhtr/api/verifier).
 
 ## Licencia
 
