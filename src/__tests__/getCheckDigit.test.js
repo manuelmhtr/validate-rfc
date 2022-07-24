@@ -1,4 +1,4 @@
-const getVerificationDigit = require('../../src/get-verification-digit');
+const getCheckDigit = require('../getCheckDigit');
 
 describe('.getVerificationDigit', () => {
   const testCases = {
@@ -13,7 +13,7 @@ describe('.getVerificationDigit', () => {
     const digit = testCases[rfc];
 
     it(`should return "${digit}" as verification digit for RFC "${rfc}"`, () => {
-      expect(getVerificationDigit(rfc)).to.be.equal(digit);
+      expect(getCheckDigit(rfc)).toEqual(digit);
     });
   });
 });

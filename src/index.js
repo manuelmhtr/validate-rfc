@@ -1,6 +1,6 @@
-const getVerificationDigit = require('./get-verification-digit');
-const forbiddenWords = require('./forbidden-words.json');
-const validRfcs = require('./valid-rfcs.json');
+const getCheckDigit = require('./getCheckDigit');
+const forbiddenWords = require('./forbiddenWords.json');
+const validRfcs = require('./validRfcs.json');
 
 const RFC_REGEXP = /^([A-ZÑ\x26]{3,4})([0-9]{6})([A-Z0-9]{3})$/;
 const INVALID_FORMAT_ERROR = 'INVALID_FORMAT';
@@ -34,7 +34,7 @@ const validateDate = (rfc) => {
 
 const validateVerificationDigit = (rfc) => {
   const digit = rfc.slice(-1);
-  const expected = getVerificationDigit(rfc);
+  const expected = getCheckDigit(rfc);
   return expected === digit;
 };
 
