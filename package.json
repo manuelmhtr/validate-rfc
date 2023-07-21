@@ -3,6 +3,7 @@
   "version": "2.0.2",
   "description": "A simple library to validate Mexican RFCs (Tax IDs)",
   "main": "dist/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "build": "./node_modules/rollup/dist/bin/rollup -c",
     "test": "jest"
