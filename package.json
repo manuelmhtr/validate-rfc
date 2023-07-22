@@ -1,6 +1,6 @@
 {
   "name": "validate-rfc",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A simple library to validate Mexican RFCs (Tax IDs)",
   "main": "dist/index.js",
   "types": "src/index.d.ts",

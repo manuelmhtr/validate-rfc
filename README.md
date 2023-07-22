@@ -133,7 +133,7 @@ $ yarn test
 Some RFCs registered by the SAT (Mexican taxing bureau) does not pass the _Check digit_ validation. For instance, `LME060822IH5` is a valid RFC and able to be invoices according the [SAT official validator](https://agsc.siat.sat.gob.mx/PTSC/ValidaRFC/index.jsf), however its _Check digit_ should be `3` rather than `5`. Therefore in those cases, this library returns `isValid` as `false` and the error `INVALID_VERIFICATION_DIGIT`.
 
 Solutions:
-1. If you find one of these cases, add it to the [list of valid RFCs](/src/valid-rfcs.json). **Upper-cased and sorted alphabetically**. By adding them to the list you are supporting the documentation of such cases and preventing from returning an error the next time.
+1. If you find one of these cases, add it to the [list of valid RFCs](/src/validRfcs.json). **Upper-cased and sorted alphabetically**. By adding them to the list you are supporting the documentation of such cases and preventing from returning an error the next time.
 2. Use the option `omitVerificationDigit` to ignore the _Check digit_ validation. It has the advantage of being a faster solution and covers all the cases, but many invalid RFCs will pass the validation.
 
 References:
